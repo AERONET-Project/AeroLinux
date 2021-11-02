@@ -1,0 +1,11 @@
+[Unit]
+Description=Connect Hologram service
+After=network-online.target sys-subsystem-net-devices-ppp0.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/hologram network connect
+
+[Install]
+WantedBy=multi-user.target
