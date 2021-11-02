@@ -91,22 +91,22 @@ chmod 777 /home/$user_var/logs
 sleep 1
 echo "Compiling remote executables"
 
-cd /home/$USER/aerolinux/remote
+cd /home/$user_var/aerolinux/remote
 cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
 sleep 3
 #Need T compilation
 echo "recompiled and now setting permissions"
-chmod -R 777 /home/$USER/aerolinux/remote
+chmod -R 777 /home/$user_var/aerolinux/remote
 chown ${user_var}: /home/$user_var/aerolinux//remote/model5_connect
 
 
 echo "Compiling local executables"
-cd /home/$USER/aerolinux/local
+cd /home/$user_var/aerolinux/local
 cc -o model5_connect model5_connect_silent.c model5_port.c -lm -lcurl
 sleep 3
 cc -o modelT_connect modelT_connect_silent.c modelT_port.c -lm -lcurl
 echo "recompiled and now setting permissions"
-chmod -R 777 /home/$USER/aerolinux/local
+chmod -R 777 /home/$user_var/aerolinux/local
 chown ${user_var}: /home/$user_var/aerolinux/local/modelT_connect
 chown ${user_var}: /home/$user_var/aerolinux/local/model5_connect
 
