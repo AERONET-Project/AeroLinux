@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#  -----------------------------------------------------------------
+# |This script installs the necessary packages on a Linux system    |
+# | It includes a Python installation to operate a modem	    |
+# | The script is meant to run once, running again will add new user|
+# | Author: anthony.d.larosa@nasa.gov				    |
+#  -----------------------------------------------------------------
+
 if [ `id -u` -ne 0 ]; then
 	echo "Please execute this installer script with sudo, exiting.."
 	exit 1
