@@ -23,7 +23,7 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
   cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
   sleep 4
   #Need T compilation
-  echo "recompiled"
+  echo "Recompiled"
  
 
   cd /home/$USER/aerolinux/local
