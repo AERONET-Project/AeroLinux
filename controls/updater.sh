@@ -9,10 +9,10 @@ else
 fi
 
 cd /home/$USER/aerolinux
-if git fetch origin master --progress 2>&1 | grep -q "Enumerating"; then
+if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
   echo "Update found from GitHub, recompiling and then rebooting..."
-  git fetch origin master
-  git reset --hard origin/master
+  git fetch origin main
+  git reset --hard origin/main
   sleep 2
   echo "======================="
   echo "======================="
@@ -22,8 +22,8 @@ if git fetch origin master --progress 2>&1 | grep -q "Enumerating"; then
   cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
   sleep 4
   #Need T compilation
-  echo "recompiled and now setting permissions"
-  chmod -R 777 /home/$USER/aerolinux/remote
+  echo "recompiled"
+ 
 
   cd /home/$USER/aerolinux/local
   cc -o model5_connect model5_connect_silent.c model5_port.c -lm -lcurl
@@ -31,7 +31,7 @@ if git fetch origin master --progress 2>&1 | grep -q "Enumerating"; then
   cc -o modelT_connect modelT_connect_silent.c modelT_port.c -lm -lcurl
   #Need T compilation
   echo "recompiled and now setting permissions"
-  chmod -R 777 /home/$USER/aerolinux/local
+  chmod -R 777 /home/$USER/aerolinux/*/
 
   if [ -z "$modem_check" ]; then
     echo "non-modem device"
