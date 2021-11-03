@@ -86,7 +86,9 @@ chown -R ${user_var}: /home/$user_var/
 chmod 777 /home/$user_var
 chmod 777 /home/$user_var/aerolinux/controls/updater.sh #lost permissions for some reason
 chmod 777 /home/$user_var/backup
-chmod 777 /home/$user_var/logs 
+chmod 777 /home/$user_var/logs
+chmod -R 777 /home/$user_var/aerolinux/controls
+chmod -R 777 /home/$user_var/aerolinux/tools
 
 sleep 1
 echo "Compiling remote executables"
