@@ -12,7 +12,7 @@
 
 modem_check=$(dmesg | grep modem)
 if [ -z "$modem_check" ]; then
-	exit 1 #this code is only needed for modem configurations
+	exit 0 #this code is only needed for modem configurations
 else
 	true
 fi
