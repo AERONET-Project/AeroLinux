@@ -8,7 +8,7 @@ else
   sudo hologram network connect
 fi
 
-cd /home/$USER/ad_dev
+cd /home/$USER/aerolinux
 if git fetch origin master --progress 2>&1 | grep -q "Enumerating"; then
   echo "Update found from GitHub, recompiling and then rebooting..."
   git fetch origin master
