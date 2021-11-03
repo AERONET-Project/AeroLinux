@@ -5,9 +5,9 @@
 # | Method for resetting USB hub and devices with 3x redundancy |
 # | Script is used for hardware/firmware bugs of Hologram Nova  |
 # | 1)Unbind and rebind the drivers to the hub controller       |
-# | 2)Reset usb using usb_modeswitch			        		|
-# | 3)Reset usb using usbreset				        			|
-# | anthony.d.larosa@nasa.gov						            |
+# | 2)Reset usb using usb_modeswitch			        |
+# | 3)Reset usb using usbreset				        |
+# | Author: anthony.d.larosa@nasa.gov					|
 #  =============================================================
 
 modem_check=$(dmesg | grep modem)
