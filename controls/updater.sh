@@ -1,5 +1,5 @@
 #!/bin/bash
-#test
+#tes
 modem_check=$(dmesg | grep modem)
 if [ -z "$modem_check" ]; then
   echo "non-modem device"
