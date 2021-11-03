@@ -19,7 +19,7 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
   sleep 3
 
   cd /home/$USER/aerolinux/remote
-  ls -lah #check that the .h and .c are read-able
+  
   cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
   sleep 4
   #Need T compilation
@@ -27,7 +27,7 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
  
 
   cd /home/$USER/aerolinux/local
-  ls -lah #check that the .h and .c are read-able
+  
   cc -o model5_connect model5_connect_silent.c model5_port.c -lm -lcurl
   sleep 4
   cc -o modelT_connect modelT_connect_silent.c modelT_port.c -lm -lcurl
