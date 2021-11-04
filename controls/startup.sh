@@ -25,5 +25,5 @@ then
 else
 	true
 fi
-
+USER=$(whoami)
 /home/$USER/aerolinux/$site/modelT_connect $devp
