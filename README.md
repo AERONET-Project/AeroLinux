@@ -17,7 +17,7 @@ This software package enables Linux devices to transfer data from Cimel sun phot
 The software provides fully autonomous data transfer, data uploading and data storage of the Cimel sun photometer version 5 and T data.
 
 
-The recommended set up is a Raspberry Pi Zero W 1.7 running Rasbian OS. H
+The recommended set up is a Raspberry Pi Zero W 1.7 running Rasbian OS.
 However, this software is lightweight and adaptable to other versions of Linux. A Debian version is strongly recommended.
 
 
