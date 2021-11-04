@@ -6,9 +6,10 @@ This software package enables Linux devices to transfer data from Cimel sun phot
 ## Appendix
 
 1) About
-2) Installation
-3) Demo
-4) Part List
+2) Local
+3) Remote
+4) Deployment
+5) Part List
 
 
 ## About
