@@ -1,6 +1,7 @@
 #!/bin/bash
 
 now=$(date)
+USER=$(whoami)
 counter=0
 getscript() {
   pgrep -lf ".[ /]$1( |\$)"
