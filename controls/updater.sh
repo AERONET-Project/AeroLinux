@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+
 USER=$(whoami)
 modem_check=$(dmesg | grep modem)
 if [ -z "$modem_check" ]; then
@@ -21,7 +21,7 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
 
   cd /home/$USER/aerolinux/remote
   
-  cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
+  #cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
   sleep 4
   #Need T compilation
   echo "Recompiled"
@@ -29,9 +29,9 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
 
   cd /home/$USER/aerolinux/local
   
-  cc -o model5_connect model5_connect_silent.c model5_port.c -lm -lcurl
+  #cc -o model5_connect model5_connect_silent.c model5_port.c -lm -lcurl
   sleep 4
-  cc -o modelT_connect modelT_connect_silent.c modelT_port.c -lm -lcurl
+  #cc -o modelT_connect modelT_connect_silent.c modelT_port.c -lm -lcurl
   #Need T compilation
   echo "recompiled and now setting permissions"
   chmod -R 777 /home/$USER/aerolinux/*/
