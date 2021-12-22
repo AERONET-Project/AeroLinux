@@ -39,4 +39,4 @@ lsusb | sudo awk '/Terminus.*Hub$/{ system("/usr/bin/usbreset " $6) }'
 #Uses built in debian usbresest command, a custom version is installed in tools
 #User will have to update exeucatable path to this tool
 sleep 30
-sudo reboot
+sudo /sbin/shutdown -r now
