@@ -7,7 +7,7 @@ getscript() {
   pgrep -lf ".[ /]$1( |\$)"
 }
 while [ $counter -lt 4 ]; do
-	if getscript "modelT_connect" >/dev/null || getscript "model5_connect" >/dev/null; then
+	if getscript "models_connect_and_reset" >/dev/null; then
 		echo "Cimel connect is running at ${now}"
 		sleep 30m
 	else
