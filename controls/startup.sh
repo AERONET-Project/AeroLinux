@@ -1,29 +1,8 @@
 #!/bin/bash
 
-modem_check=$(dmesg | grep modem)
+modem_check=$(lsusb | grep Qualcomm)
 if [ -z "$modem_check" ]; then
-	site='local'
+	$HOME/aerolinux/cimel_connect/models_connect_and_reset </dev/null
 else
-	site='remote'
+	lsusb | $HOME/aerolinux/cimel_connect/models_connect_and_reset
 fi
-
-devp=$(
-for sysdevpath in $(find /sys/bus/usb/devices/usb*/ -name dev); do
-    (
-        syspath="${sysdevpath%/dev}"
-        devname="$(udevadm info -q name -p $syspath)"
-        [[ "$devname" == "bus/"* ]] && exit
-        eval "$(udevadm info -q property --export -p $syspath)"
-        [[ -z "$ID_SERIAL" ]] && exit
-        echo "/dev/$devname - $ID_SERIAL" | grep FTDI | head -n1 | cut -d " " -f1 | tail -c 5
-    )
-done)
-
-if [ -z "$devp" ]
-then
-	devp=USB0
-else
-	true
-fi
-USER=$(whoami)
-/home/$USER/aerolinux/$site/modelT_connect $devp
