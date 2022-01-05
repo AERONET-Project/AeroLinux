@@ -88,7 +88,7 @@ sleep 2
 mkdir /home/$user_var/logs #Make a log file directory
 mkdir /home/$user_var/backup #For data files saved to disk
 touch /home/$user_var/logs/connection.log
-touch /home/$user_var/modem_diagnostics.log
+touch /home/$user_var/logs/modem_diagnostics.log
 cp -r $PWD /home/$user_var #Copy the programs from current user to new user
 chown -R ${user_var}: /home/$user_var/
 chmod -R 777 /home/$user_var/
