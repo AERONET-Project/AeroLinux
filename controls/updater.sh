@@ -1,7 +1,7 @@
 #!/bin/bash
 
 USER=$(whoami)
-modem_check=$(dmesg | grep modem)
+modem_check=$(lsusb | grep Qualcomm)
 if [ -z "$modem_check" ]; then
   echo "non-modem device"
 else
@@ -19,22 +19,13 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
   echo "======================="
   sleep 3
 
-  cd /home/$USER/aerolinux/remote
+  cd /home/$USER/aerolinux/cimel_connect
   
-  #cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
+  #cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
   sleep 4
-  #Need T compilation
-  echo "Recompiled"
  
-
-  cd /home/$USER/aerolinux/local
-  
-  #cc -o model5_connect model5_connect_silent.c model5_port.c -lm -lcurl
-  sleep 4
-  #cc -o modelT_connect modelT_connect_silent.c modelT_port.c -lm -lcurl
-  #Need T compilation
-  echo "recompiled and now setting permissions"
-  chmod -R 777 /home/$USER/aerolinux/*/
+  echo "Recompiled and now setting permissions"
+  chmod -R 777 /home/$USER/aerolinux/cimel_connect/
 
   if [ -z "$modem_check" ]; then
     echo "non-modem device"
