@@ -73,14 +73,12 @@ fi
 echo "$user_var	ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "Adding cronjobs to user's crontab"
 cronjob1="@reboot sleep 180 && /home/$user_var/aerolinux/controls/startup.sh"
-cronjob2="@reboot sleep 220 && /home/$user_var/aerolinux/controls/watch.sh"
-cronjob3="0 1 * * * /home/$user_var/aerolinux/USB_handler.sh"
-cronjob4="0 0 * * * /home/$user_var/aerolinux/updater.sh"
+cronjob2="@reboot sleep 300 && /home/$user_var/aerolinux/controls/watch.sh"
+cronjob3="0 0 */2 * * /home/$user_var/aerolinux/updater.sh"
 
 { crontab -l -u $user_var 2>/dev/null; echo "$cronjob1"; } | crontab -u $user_var -
 { crontab -l -u $user_var; echo "$cronjob2"; } | crontab -u $user_var -
 { crontab -l -u $user_var; echo "$cronjob3"; } | crontab -u $user_var -
-{ crontab -l -u $user_var; echo "$cronjob4"; } | crontab -u $user_var -
 
 
 
@@ -88,16 +86,22 @@ echo "Building new directories..."
 sleep 3
 mkdir /home/$user_var/logs #Make a log file directory
 mkdir /home/$user_var/backup #For data files saved to disk
+touch /home/$user_var/logs/connection.log
+touch /home/$user_var/modem_diagnostics.log
 cp -r $PWD /home/$user_var #Copy the programs from current user to new user
 chown -R ${user_var}: /home/$user_var/
 chmod 777 /home/$user_var
 chmod 777 /home/$user_var/aerolinux/controls/updater.sh #lost permissions for some reason
 chmod 777 /home/$user_var/backup
-chmod 777 /home/$user_var/logs
+chmod -R 777 /home/$user_var/logs
 chmod -R 777 /home/$user_var/aerolinux/controls
 chmod -R 777 /home/$user_var/aerolinux/tools
 
-sleep 1
+sleep 2
+echo "Compiling Cimel software package..."
+cd /home/$user_var/aerolinux/cimel_connect/
+
+
 echo "Compiling remote executables"
 
 cd /home/$user_var/aerolinux/remote
