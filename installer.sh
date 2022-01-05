@@ -81,47 +81,29 @@ cronjob3="0 0 */2 * * /home/$user_var/aerolinux/updater.sh"
 { crontab -l -u $user_var; echo "$cronjob3"; } | crontab -u $user_var -
 
 
-
+sleep 2
 echo "Building new directories..."
-sleep 3
+sleep 2
+
 mkdir /home/$user_var/logs #Make a log file directory
 mkdir /home/$user_var/backup #For data files saved to disk
 touch /home/$user_var/logs/connection.log
 touch /home/$user_var/modem_diagnostics.log
 cp -r $PWD /home/$user_var #Copy the programs from current user to new user
 chown -R ${user_var}: /home/$user_var/
-chmod 777 /home/$user_var
-chmod 777 /home/$user_var/aerolinux/controls/updater.sh #lost permissions for some reason
-chmod 777 /home/$user_var/backup
-chmod -R 777 /home/$user_var/logs
-chmod -R 777 /home/$user_var/aerolinux/controls
-chmod -R 777 /home/$user_var/aerolinux/tools
+chmod -R 777 /home/$user_var/
+
 
 sleep 2
 echo "Compiling Cimel software package..."
+sleep 2
+
 cd /home/$user_var/aerolinux/cimel_connect/
+cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
+chmod -R 777 /home/$user_var/aerolinux/cimel_connect/
+chown ${user_var}: /home/$user_var/aerolinux//cimel_connect/models_connect_and_reset
 
 
-echo "Compiling remote executables"
-
-cd /home/$user_var/aerolinux/remote
-cc -o model5_connect model5_connect.c model5_port.c -lm -lcurl
-sleep 3
-#Need T compilation
-echo "recompiled and now setting permissions"
-chmod -R 777 /home/$user_var/aerolinux/remote
-chown ${user_var}: /home/$user_var/aerolinux//remote/model5_connect
-
-
-echo "Compiling local executables"
-cd /home/$user_var/aerolinux/local
-cc -o model5_connect model5_connect_silent.c model5_port.c -lm -lcurl
-sleep 3
-cc -o modelT_connect modelT_connect_silent.c modelT_port.c -lm -lcurl
-echo "recompiled and now setting permissions"
-chmod -R 777 /home/$user_var/aerolinux/local
-chown ${user_var}: /home/$user_var/aerolinux/local/modelT_connect
-chown ${user_var}: /home/$user_var/aerolinux/local/model5_connect
 
 sleep 2
 echo "==========================="
