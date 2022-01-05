@@ -7,13 +7,15 @@
 # | 1)Unbind and rebind the drivers to the hub controller       |
 # | 2)Reset usb using usb_modeswitch			        |
 # | 3)Reset usb using usbreset				        |
-# |								|
 #  =============================================================
 
-modem_check=$(dmesg | grep modem)
+now=$(date)
+modem_check=$(lsusb | grep Qualcomm) #Check for a modem, specifically a USB Qualcomm
+
 if [ -z "$modem_check" ]; then
-	exit 0 #this code is only needed for modem configurations
+	exit 0 #this script is only needed for modem configurations
 else
+	echo "Modem encountered an error at $now" >> $HOME/logs/modem_diagnostics.log
 	true
 fi
 
