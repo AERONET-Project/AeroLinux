@@ -1,4 +1,4 @@
-Version 1.0.2
+Current Version 1.0.2
 # AeroLinux
 
 This software package enables Linux devices to transfer data from Cimel sun photometers via Ethernet, Wi-Fi or a Hologram Nova cellular modem.
