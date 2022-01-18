@@ -133,7 +133,7 @@ if (!strstr (buffer,"ERROR"))
 
 
 printf ("Found error in connection even after reset\n%s\nWill reboot\n", buffer);
-system ("/home/$USER/USB_handler.sh");
+system ("sudo /sbin/shutdown -r now");
 
 return 0;
 
@@ -1706,7 +1706,9 @@ time_t V5_read_k7_buffer_from_disk(char *dir_name, CIMEL_BUFFER *ptr)
     {
 
         rec_size = buf[1];
-        if (buf + rec_size >= bufend)
+        if (rec_size < 1) end_read = 1;
+        else
+       if (buf + rec_size >= bufend)
             end_read = 1;
         else if (buf[rec_size - 1] != rec_size)
             end_read = 1;
@@ -1738,5 +1740,8 @@ time_t V5_read_k7_buffer_from_disk(char *dir_name, CIMEL_BUFFER *ptr)
 
     free(buffer);
 
-    return ptr->records->record_time;
+   if (!ptr->num_records) return 0;
+    
+   return ptr->records->record_time;   
+
 }
