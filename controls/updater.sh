@@ -25,7 +25,8 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
   sleep 4
  
   echo "Recompiled and now setting permissions"
-  chmod -R 777 /home/$USER/aerolinux/cimel_connect/
+  chmod -R 777 /home/$USER/aerolinux/
+  chown ${USER}:${USER} /home/$USER/aerolinux/
 
   if [ -z "$modem_check" ]; then
     echo "non-modem device"
