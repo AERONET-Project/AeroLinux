@@ -52,6 +52,9 @@ To get your project up and running please clone the latest version of the softwa
 
 Run the installation script:
 ```bash
+  cd aerolinux
+```
+```bash
   sudo ./installer.sh
 ```
 Thereafter you will be prompted to enter
