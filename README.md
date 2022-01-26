@@ -11,7 +11,8 @@ This software package enables Linux devices to transfer data from Cimel sun phot
 2) Local
 3) Remote
 4) Deployment
-5) Part List
+5) Technical Details
+6) Part List
 
 
 ## About
@@ -57,7 +58,7 @@ Run the installation script:
 ```bash
   sudo ./installer.sh
 ```
-Thereafter you will be prompted to enter
+Thereafter, you will be prompted to enter
 a new user which will become the default user
 of the system.
 
@@ -67,9 +68,15 @@ Please reboot the system to hard reload daemons and kernel changes.
   sudo reboot
 ```
 
-Your system is now ready to go.
+Your system is now ready to go!
 
+## Technical Details
 
+The program will run fully autonomously, with integrated error checking and monitoring. Therefore, the system is designed as a plug and go with no configuartion required after the installation and reboot.
+
+The system can handle unplugging and reconnecting cables, however, it is wise to un-plug and reboot the Pi when everything has been plugged in.
+
+Any updates to this GitHub respository will be propagted to your device automatically. 
 
 ## Tech Stack
 
