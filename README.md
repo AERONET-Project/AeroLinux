@@ -56,7 +56,7 @@ Run the installation script:
   cd aerolinux
 ```
 ```bash
-  sudo ./installer.sh
+  sudo ./installer.sh && chmod 755 installer.sh
 ```
 Thereafter, you will be prompted to enter
 a new user which will become the default user
