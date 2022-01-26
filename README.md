@@ -84,3 +84,8 @@ Any updates to this GitHub respository will be propagted to your device automati
 
 **OS Image:** 2020-05-27-raspios-buster-lite-armhf.img
 
+## Part List
+
+* Rasberry Pi
+* Ethernet Hub and USB Hub w/ Micro USB OTG Connector
+* 5V Power Supply
