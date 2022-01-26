@@ -16,20 +16,18 @@ This software package enables Linux devices to transfer data from Cimel sun phot
 
 ## About
 
-The software provides fully autonomous data transfer, data uploading and data storage of the Cimel sun photometer version 5 and T data.
+The software provides fully autonomous data transfer, data uploading and data storage of the Cimel sun photometer Model 5 and TS data, and their accompanying versions (SeaPrism, Polar, etc).
 
 
 The recommended set up is a Raspberry Pi Zero W 1.7 running Rasbian OS. H
 However, this software is lightweight and adaptable to other versions of Linux. A Debian version is strongly recommended.
 
 
-Two data transfer configurations are possible, **Local** or **Remote**.
-
 Simply run the installation script and your system will be configured to run.
 
 The data will be stored on the eMMC flash storage device as a fail safe and will be uploaded or retrieved at a later time.
 ## Local
-This configuration is when the Linux device is connected to LAN or Wi-Fi. The Raspberry Pi can be connected to both LAN and Wi-Fi.
+This configuration is when the Linux device is connected to LAN or Wi-Fi. The Raspberry Pi can be connected to both LAN and Wi-Fi. We recommend being connected to AC power when operating with this version, as power consumption data has not been analyzed.
 ## Remote
 
 The remote configuration requires a Hologram Nova modem to transfer data. These configurations should be used when the site is remote and running on solar power.
@@ -48,7 +46,7 @@ Then install git,
 
 To get your project up and running please clone the latest version of the software,
 ```bash
-  git clone https://github.com/anthony-larosa/aerolinux.git
+  sudo git clone https://github.com/anthony-larosa/aerolinux.git
 ```
 
 
