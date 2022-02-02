@@ -1,4 +1,4 @@
-<img align="right" width="100" height="100" src="https://www.x20.org/wp-content/uploads/2015/01/NASA-logo.png"><br/>
+<img align="right" width="100" height="100" src="https://aeronet.gsfc.nasa.gov/images/aeronet_banner2.gif"><br/>
 
 # AeroLinux
 
