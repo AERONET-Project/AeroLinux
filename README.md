@@ -91,11 +91,15 @@ There is no need to upgrade OS image to current as the updates are GUI related.
 * Ethernet Hub and USB Hub w/ Micro USB OTG Connector
 * 5V Power Supply
 
-| Part  | Notes |
+| Part  | Purchase URL |
 | ------------- | ------------- |
 | Raspberry Pi Zero W (1.7)  | [Link](https://www.raspberrypi.com/products/raspberry-pi-zero-w/)  |
 | USB + Ethernet Hat & Case  | [Link](https://www.newegg.com/p/0XM-04WN-00006?Item=9SIB6FWGR62475)  |
 | AC Power Supply  | [Link](https://www.adafruit.com/product/1995?gclid=Cj0KCQiA0eOPBhCGARIsAFIwTs7Y9D-CGvd56o7pYmg8GlOTs6Ii-GeUW5u5k6WKNL8dwm3qR1UXf3MaAkWaEALw_wcB)  |
 | Micro SD Card  | [Link](https://www.newegg.com/sandisk-16gb-microsdhc/p/N82E16820173358)  |
 
+***Using a cellular modem*** 
+This an option for an internet connection to transfer data, the software supports the Hologram Nova [2G/3G](https://www.digikey.com/en/products/detail/hologram-inc./HOL-NOVA-U201/7915568) or [/4G/LTE](https://www.digikey.com/en/products/detail/hologram-inc/HOL-NOVA-R410/9489897) (USA)
 
+***Using a solar power***
+Sometimes your Cimel may be located in a remote region powered by battery. Most times the battery will provide 12 volts. The Pi can only take 5 volts in put, a DC/DC converter is required and we recommend the following due to its ease of use, [12-5V DC](https://www.newegg.com/p/2S7-01JK-0JVH6?Description=12v%20to%205v%20micro%20usb%20converter&cm_re=12v_to%205v%20micro%20usb%20converter-_-2S7-01JK-0JVH6-_-Product&quicklink=true)
