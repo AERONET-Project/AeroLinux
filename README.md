@@ -94,4 +94,4 @@ There is no need to upgrade OS image to current as the updates are GUI related.
 | Part  | Notes |
 | ------------- | ------------- |
 | Content Cell  | Content Cell  |
-| USB + Ethernet Hat & Case  | Content Cell  |
+| USB + Ethernet Hat & Case  | [Link](https://www.newegg.com/p/0XM-04WN-00006?Item=9SIB6FWGR62475)  |
