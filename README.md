@@ -1,3 +1,4 @@
+![This is an image](https://aeronet.gsfc.nasa.gov/images/aeronet_banner2.gif)
 # AeroLinux
 
 This software package enables Linux devices to transfer data from Cimel sun photometers via Ethernet, Wi-Fi or a Hologram Nova cellular modem.
