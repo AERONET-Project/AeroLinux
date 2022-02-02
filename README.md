@@ -93,5 +93,9 @@ There is no need to upgrade OS image to current as the updates are GUI related.
 
 | Part  | Notes |
 | ------------- | ------------- |
-| Content Cell  | Content Cell  |
+| Raspberry Pi Zero W (1.7)  | [Link](https://www.raspberrypi.com/products/raspberry-pi-zero-w/)  |
 | USB + Ethernet Hat & Case  | [Link](https://www.newegg.com/p/0XM-04WN-00006?Item=9SIB6FWGR62475)  |
+| AC Power Supply  | [Link](https://www.adafruit.com/product/1995?gclid=Cj0KCQiA0eOPBhCGARIsAFIwTs7Y9D-CGvd56o7pYmg8GlOTs6Ii-GeUW5u5k6WKNL8dwm3qR1UXf3MaAkWaEALw_wcB)  |
+| Micro SD Card  | [Link](https://www.newegg.com/sandisk-16gb-microsdhc/p/N82E16820173358)  |
+
+
