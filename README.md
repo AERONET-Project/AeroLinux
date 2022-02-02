@@ -80,12 +80,18 @@ Any updates to this GitHub respository will be propagted to your device automati
 
 ## Tech Stack
 
-**Raspberry Pi Devices:** Zero W (1.7), Raspberry Pi 3(A, A+,B+) and Raspberry Pi 4(B).
+**Raspberry Pi Devices:** Zero W (1.7 and 2), Raspberry Pi 3(A, A+,B+) and Raspberry Pi 4(B).
 
 **OS Image:** 2020-05-27-raspios-buster-lite-armhf.img
+There is no need to upgrade OS image to current as the updates are GUI related. 
 
 ## Part List
 
 * Rasberry Pi
 * Ethernet Hub and USB Hub w/ Micro USB OTG Connector
 * 5V Power Supply
+
+| Part  | Notes |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| USB + Ethernet Hat & Case  | Content Cell  |
