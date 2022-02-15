@@ -15,6 +15,7 @@ while [ $counter -lt 4 ]; do
 		counter=$((counter+1))
 		/home/$USER/aerolinux/controls/startup.sh
 		sleep 30m
+		now=$(date)
 	fi
 done
 echo "Reached counter at ${now} and performed reboot" >> $HOME/logs/connection.log
