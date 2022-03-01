@@ -92,7 +92,7 @@ There is no need to upgrade OS image to current as the updates are GUI related.
 | Part  | Purchase URL |
 | ------------- | ------------- |
 | Raspberry Pi Zero W (1.7)  | [Link](https://www.raspberrypi.com/products/raspberry-pi-zero-w/)  |
-| USB + Ethernet Hat & Case  | [Link](https://www.newegg.com/p/0XM-04WN-00006?Item=9SIB6FWGR62475)  |
+| USB + Ethernet Hat & Case  | [Link](https://www.newegg.com/p/181-08AA-00003) or [Link](https://www.amazon.com/Ethernet-Case-Raspberry-Zero-Ports/dp/B09KY11X86/ref=pd_sbs_3/144-1380153-4540452?pd_rd_w=HuXHY&pf_rd_p=dfec2022-428d-4b18-a6d4-8f791333a139&pf_rd_r=SD7VDNW3ZTKQS2N5Q641&pd_rd_r=67fb36a2-57c8-43c9-821b-e96d4eba0431&pd_rd_wg=mcUmB&pd_rd_i=B09KY11X86&psc=1) |
 | AC Power Supply  | [Link](https://www.adafruit.com/product/1995?gclid=Cj0KCQiA0eOPBhCGARIsAFIwTs7Y9D-CGvd56o7pYmg8GlOTs6Ii-GeUW5u5k6WKNL8dwm3qR1UXf3MaAkWaEALw_wcB)  |
 | Micro SD Card  | [Link](https://www.newegg.com/sandisk-16gb-microsdhc/p/N82E16820173358)  |
 
