@@ -21,7 +21,7 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
 
   cd /home/$USER/aerolinux/cimel_connect
   
-  #cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
+  cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
   sleep 4
  
   echo "Recompiled and now setting permissions"
