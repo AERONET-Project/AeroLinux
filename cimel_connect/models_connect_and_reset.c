@@ -287,7 +287,7 @@ start main loop
                 pc_time = time(NULL);
                 printf("Will try to retreive K8 buffer %s", ctime(&pc_time));
 
-                if (T_retrieve_k8_buffer_data_only(&mcport, &k8b, 300))
+                if (T_retrieve_k8_buffer_data_only(&mcport, &k8b, 17000))
                 {
 
                     T_save_k8_buffer_on_disk(homedir, &k8b);
