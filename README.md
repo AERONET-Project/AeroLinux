@@ -85,7 +85,7 @@ Any updates to this GitHub respository will be propagted to your device automati
 **Raspberry Pi Devices:** Zero W (1.7 and 2), Raspberry Pi 3(A, A+,B+) and Raspberry Pi 4(B).
 
 **OS Image:** 2020-05-27-raspios-buster-lite-armhf.img - Can be downloaded [here](http://ftp.jaist.ac.jp/pub/raspberrypi/raspios_lite_armhf/images/raspios_lite_armhf-2020-05-28/)
-There is no need to upgrade OS image to current as the updates are GUI related. 
+There is no need to upgrade the OS image to the current version, as the updates are GUI related. 
 
 ## Part List
 
@@ -97,7 +97,7 @@ There is no need to upgrade OS image to current as the updates are GUI related.
 | Micro SD Card  | [Link](https://www.newegg.com/sandisk-16gb-microsdhc/p/N82E16820173358)  |
 
 ***Using a cellular modem*** 
-This an option for an internet connection to transfer data, the software supports the Hologram Nova [2G/3G](https://www.digikey.com/en/products/detail/hologram-inc./HOL-NOVA-U201/7915568) or [/4G/LTE](https://www.digikey.com/en/products/detail/hologram-inc/HOL-NOVA-R410/9489897) (USA)
+This an option for an internet connection to transfer data, the software supports the Hologram Nova [2G/3G](https://www.digikey.com/en/products/detail/hologram-inc./HOL-NOVA-U201/7915568) or [4G/LTE](https://www.digikey.com/en/products/detail/hologram-inc/HOL-NOVA-R410/9489897) (USA)
 
 ***Using solar power***
-Sometimes your Cimel may be located in a remote region powered by battery. Most times the battery will provide 12 volts. The Pi can only take 5 volts in put, a DC/DC converter is required and we recommend the following due to its ease of use, [12-5V DC](https://www.newegg.com/p/2S7-01JK-0JVH6?Description=12v%20to%205v%20micro%20usb%20converter&cm_re=12v_to%205v%20micro%20usb%20converter-_-2S7-01JK-0JVH6-_-Product&quicklink=true)
+Sometimes your Cimel may be located in a remote region powered by battery. In most setups the battery will provide 12 volts. The Pi can only take 5 volts input, a DC/DC converter is required and we recommend the following due to its ease of use, [12-5V DC](https://www.newegg.com/p/2S7-01JK-0JVH6?Description=12v%20to%205v%20micro%20usb%20converter&cm_re=12v_to%205v%20micro%20usb%20converter-_-2S7-01JK-0JVH6-_-Product&quicklink=true)
