@@ -55,7 +55,7 @@ To get your project up and running please clone the latest version of the softwa
 
 Run the installation script:
 ```bash
-  cd aerolinux && chmod 755 installer.sh
+  cd aerolinux && sudo chmod 755 installer.sh
 ```
 ```bash
   sudo ./installer.sh
