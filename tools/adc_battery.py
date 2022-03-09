@@ -10,7 +10,7 @@ import os
 
 i2c = busio.I2C(board.SCL, board.SDA)
 ads = ADS.ADS1115(i2c)
-path = os.path.expandvars('/home/$USER/ad_dev/tools/battery.txt')
+path = os.path.expandvars('/home/$USER/aerolinux/tools/battery.txt')
 while True:
 	f=open(path,'a')
 	now = datetime.datetime.now().isoformat()
