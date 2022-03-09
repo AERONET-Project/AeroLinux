@@ -72,7 +72,7 @@ fi
 
 echo "$user_var	ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "Adding cronjobs to user's crontab"
-cronjob1="@reboot sleep 180 && /home/$user_var/aerolinux/controls/startup.sh"
+cronjob1="@reboot sleep 180 && /home/$user_var/aerolinux/controls/startup.sh >> $HOME/logs/connection.log"
 cronjob2="@reboot sleep 300 && /home/$user_var/aerolinux/controls/watch.sh"
 cronjob3="0 0 */2 * * /home/$user_var/aerolinux/controls/updater.sh"
 cronjob4="0 0 */2 * * /home/$user_var/aerolinux/controls/k7_k8_check.sh"
