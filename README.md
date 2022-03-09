@@ -76,9 +76,9 @@ Your system is now ready to go!
 
 The program will run fully autonomously, with integrated error checking and monitoring. Therefore, the system is designed as a plug and go with no configuartion required after the installation and reboot.
 
-The system can handle unplugging and reconnecting cables, however, it is wise to un-plug and reboot the Pi when everything has been plugged in.
+The system can handle unplugging and reconnecting cables, however, it is recommended to un-plug power to the Pi when you are unplugging and replugging cables.
 
-Any updates to this GitHub respository will be propagted to your device automatically. 
+Any updates to this GitHub respository will be propagted to your device automatically always insuring you are running the latest version of the software.
 
 ## Tech Stack
 
