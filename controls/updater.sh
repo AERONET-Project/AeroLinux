@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER=$(whoami)
+USER=$(logname)
 modem_check=$(lsusb | grep Qualcomm)
 if [ -z "$modem_check" ]; then
   echo "non-modem device"
