@@ -54,7 +54,7 @@ cronjob1="@reboot sleep 180 && /home/$user_var/aerolinux/controls/startup.sh >> 
 cronjob2="@reboot sleep 300 && /home/$user_var/aerolinux/controls/watch.sh"
 cronjob3="0 0 */2 * * /home/$user_var/aerolinux/controls/updater.sh"
 cronjob4="0 0 */2 * * /home/$user_var/aerolinux/controls/k7_k8_check.sh"
-cronjob5="@reboot sleep 30 /home/$user_var/aerolinux/controls/pi_ftp_upload.sh"
+cronjob5="@reboot sleep 30 /home/$user_var/aerolinux/controls/pi_ftp_upload.sh >> /home/$user_var/logs/modem_diagnostics.log"
 
 { crontab -l -u $user_var 2>/dev/null; echo "$cronjob1"; } | crontab -u $user_var -
 { crontab -l -u $user_var; echo "$cronjob2"; } | crontab -u $user_var -
