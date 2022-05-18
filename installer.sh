@@ -54,11 +54,14 @@ cronjob1="@reboot sleep 180 && /home/$user_var/aerolinux/controls/startup.sh >> 
 cronjob2="@reboot sleep 300 && /home/$user_var/aerolinux/controls/watch.sh"
 cronjob3="0 0 */2 * * /home/$user_var/aerolinux/controls/updater.sh"
 cronjob4="0 0 */2 * * /home/$user_var/aerolinux/controls/k7_k8_check.sh"
+cronjob5="@reboot sleep 30 /home/$user_var/aerolinux/controls/pi_ftp_upload.sh"
 
 { crontab -l -u $user_var 2>/dev/null; echo "$cronjob1"; } | crontab -u $user_var -
 { crontab -l -u $user_var; echo "$cronjob2"; } | crontab -u $user_var -
 { crontab -l -u $user_var; echo "$cronjob3"; } | crontab -u $user_var -
 { crontab -l -u $user_var; echo "$cronjob4"; } | crontab -u $user_var -
+{ crontab -l -u $user_var; echo "$cronjob5"; } | crontab -u $user_var -
+
 
 sleep 2
 echo "Building new directories..."
@@ -68,6 +71,9 @@ mkdir /home/$user_var/logs #Make a log file directory
 mkdir /home/$user_var/backup #For data files saved to disk
 touch /home/$user_var/logs/connection.log
 touch /home/$user_var/logs/modem_diagnostics.log
+
+cd /home/$user_var/aerolinux/controls/
+cc -o pi_ftp_upload /home/$user_var/aerolinux/controls/pi_ftp_upload.c -lm -lcurl
 chown -R ${user_var}: /home/$user_var/
 chmod -R 777 /home/$user_var/
 
@@ -75,6 +81,7 @@ chmod -R 777 /home/$user_var/
 sleep 2
 echo "Compiling Cimel software package..."
 sleep 2
+
 
 cd /home/$user_var/aerolinux/cimel_connect/
 cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
