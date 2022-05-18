@@ -9,11 +9,13 @@ getscript() {
 while [ $counter -lt 4 ]; do
 	if getscript "models_connect_and_reset" >/dev/null; then
 		echo "Cimel connect is running at ${now}"
+		/home/$USER/aerolinux/controls/pi_ftp_upload.sh
 		sleep 30m
 	else
 		echo "Cimel connect was not running at ${now}." >> $HOME/logs/connection.log
 		counter=$((counter+1))
 		/home/$USER/aerolinux/controls/startup.sh
+		/home/$USER/aerolinux/controls/pi_ftp_upload.sh
 		sleep 30m
 		now=$(date)
 	fi
