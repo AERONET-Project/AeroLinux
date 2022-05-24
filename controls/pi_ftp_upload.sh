@@ -1,7 +1,7 @@
 #!/bin/bash
 
 modem_check=$(lsusb | grep Qualcomm) #returns string if modem was identified
-$user_var=$(logname)
+user_var=$(logname)
 
 if [ -z "$modem_check" ]; then #Checks if modem_check is 0/empty - i.e., no modem 
 	echo "A USB modem is connected"	
