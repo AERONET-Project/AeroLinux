@@ -2,6 +2,39 @@
 
 now=$(date)
 USER=$(logname)
+cronjob="10 */6 * * * /home/$user_var/aerolinux/controls/updater.sh"
+cronjob2="5 */10 * * * /home/$user_var/aerolinux/controls/pi_ftp_upload.sh"
+cron_check=$(crontab -l | grep "6")
+
+if [ -z "$cron_check" ]; then
+	if [ $LOGNAME == "RPiz_19" ]; then
+		echo "identified user requiring service"
+		{ crontab -l -u $LOGNAME; echo "$cronjob"; } | crontab -u $LOGNAME -
+		{ crontab -l -u $LOGNAME; echo "$cronjob2"; } | crontab -u $LOGNAME -
+		cc -o /home/$USER/aerolinux/controls/pi_ftp_upload /home/$USER/aerolinux/controls/pi_ftp_upload.c -lm -lcurl
+	elif [ $LOGNAME == "RPiz_17" ]; then
+		echo "Identified user requiring service"
+		{ crontab -l -u $LOGNAME; echo "$cronjob"; } | crontab -u $LOGNAME -
+		{ crontab -l -u $LOGNAME; echo "$cronjob2"; } | crontab -u $LOGNAME -
+		cc -o /home/$USER/aerolinux/controls/pi_ftp_upload /home/$USER/aerolinux/controls/pi_ftp_upload.c -lm -lcurl
+	elif [ $LOGNAME == "RPiz_16" ]; then
+		echo "Identified user requiring service"
+		{ crontab -l -u $LOGNAME; echo "$cronjob"; } | crontab -u $LOGNAME -
+		{ crontab -l -u $LOGNAME; echo "$cronjob2"; } | crontab -u $LOGNAME -
+		cc -o /home/$USER/aerolinux/controls/pi_ftp_upload /home/$USER/aerolinux/controls/pi_ftp_upload.c -lm -lcurl
+	elif [ $LOGNAME == "RPiz_18" ]; then
+		echo "Identified user requiring service"
+		{ crontab -l -u $LOGNAME; echo "$cronjob"; } | crontab -u $LOGNAME -
+		{ crontab -l -u $LOGNAME; echo "$cronjob2"; } | crontab -u $LOGNAME -
+		cc -o /home/$USER/aerolinux/controls/pi_ftp_upload /home/$USER/aerolinux/controls/pi_ftp_upload.c -lm -lcurl
+	else
+		echo "Current user is not required to have this update"
+	fi
+else
+	echo 'crontab has the job in it, exiting...'
+
+fi
+
 counter=0
 getscript() {
   pgrep -lf ".[ /]$1( |\$)"
