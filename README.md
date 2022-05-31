@@ -60,9 +60,6 @@ Run the installation script:
 ```bash
   sudo ./installer.sh
 ```
-Thereafter, you will be prompted to enter
-a new user which will become the default user
-of the system.
 
 Please reboot the system to hard reload daemons and kernel changes.
 
@@ -84,7 +81,7 @@ Any updates to this GitHub respository will be propagted to your device automati
 
 **Raspberry Pi Devices:** Zero W (1.7 and 2), Raspberry Pi 3(A, A+,B+) and Raspberry Pi 4(B).
 
-**OS Image:** 2020-05-27-raspios-buster-lite-armhf.img - Can be downloaded [here](http://ftp.jaist.ac.jp/pub/raspberrypi/raspios_lite_armhf/images/raspios_lite_armhf-2020-05-28/) and download the following file: 2020-05-27-raspios-buster-lite-armhf.zip
+**OS Image:** 2024-04-07-raspios-buster-lite-armhf.img - Can be downloaded [here](http://ftp.jaist.ac.jp/pub/raspberrypi/raspios_lite_armhf/images/raspios_lite_armhf-2022-04-07/) and download the following file: 2020-05-27-raspios-buster-lite-armhf.zip
 There is no need to upgrade the OS image to the current version, as the updates are GUI related. 
 
 ## Part List
