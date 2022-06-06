@@ -3,9 +3,9 @@
 # AeroLinux
 
 This software package enables Linux devices to transfer data from Cimel sun photometers via Ethernet, Wi-Fi or a Hologram Nova cellular modem.
-#### Version 1.1.0 ####
- * Changed k8 buffer check for Model T units - checks up to 30 days of data stored
- * Added a script to monitor successful data transfer from control box to CPU
+#### Version 1.1.1 ####
+ * On boot, sends a network settings message to our server via FTP
+ * Watch runs on a 26 hour basis now
 
 ## Appendix
 
