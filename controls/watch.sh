@@ -11,13 +11,13 @@ while [ $counter -lt 4 ]; do
 	if getscript "models_connect_and_reset" >/dev/null; then
 		echo "Cimel connect is running at ${now}"
 
-		sleep 6h
+		sleep 13h
 	else
 		echo "Cimel connect was not running at ${now}." >> $HOME/logs/connection.log
 		counter=$((counter+1))
 		/home/$USER/aerolinux/controls/startup.sh
 		
-		sleep 6h
+		sleep 13h
 		now=$(date)
 	fi
 done
