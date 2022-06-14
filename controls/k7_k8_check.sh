@@ -5,7 +5,7 @@ file2=$HOME/last_time.k8
 
 if [ -f $file1 ] || [ -f $file2 ]
 then
-	echo "A file exist"
+	echo "A file exists"
 else
 	echo "No last_time file detected at ${date}" >> $HOME/logs/connection.log
 	exit 0
@@ -14,7 +14,7 @@ fi
 if [ -f $file1 ] && [ -f $file2 ]
 then
 	echo 'Both files exist'
-	if [ ${file1} -ot ${file2} ]
+	if [ ${file1} -ot ${file2} ] #compare time of creation (older than)
 	then
 		echo 'k8 file is newer using that to compare'
 		FILE=$HOME/last_time.k8
