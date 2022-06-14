@@ -68,6 +68,7 @@ echo "Building new directories..."
 sleep 2
 
 mkdir /home/$user_var/logs #Make a log file directory
+mkdir /home/$user_var/cimel_logs #Make a log directory for cimel connect output
 mkdir /home/$user_var/backup #For data files saved to disk
 touch /home/$user_var/logs/connection.log
 touch /home/$user_var/logs/modem_diagnostics.log
