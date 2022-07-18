@@ -87,7 +87,7 @@ sleep 2
 cd /home/$user_var/aerolinux/cimel_connect/
 cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
 chmod -R 777 /home/$user_var/aerolinux/cimel_connect/
-chown ${user_var}: /home/$user_var/aerolinux//cimel_connect/models_connect_and_reset
+chown ${user_var}: /home/$user_var/aerolinux/cimel_connect/models_connect_and_reset
 
 
 
