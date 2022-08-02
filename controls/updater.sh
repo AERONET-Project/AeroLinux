@@ -23,6 +23,9 @@ if git fetch origin main --progress 2>&1 | grep -q "Enumerating"; then
   
   cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
   sleep 4
+  cd /home/$user_var/aerolinux/controls/
+  cc -o pi_ftp_upload /home/$user_var/aerolinux/controls/pi_ftp_upload.c -lm -lcurl
+  cc -o backup_send /home/$user_var/aerolinux/controls/find_and_upload_backup_files.c models_port.c -lm -lcurl
  
   echo "Recompiled and now setting permissions"
   chmod -R 777 /home/$USER/aerolinux/
