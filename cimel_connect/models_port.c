@@ -15,9 +15,29 @@
 
 // common V4, V5 and T functions
 
-int define_usb_com_port(char *usb_port)
+void output_message_to_log(char *log_file, char *message_text)
 {
-    char buffer[100], full_path[200], *ch;
+    FILE *out;
+
+    printf("%s", message_text);
+
+    if (log_file == NULL) return;
+
+    out = fopen(log_file, "a");
+    if (out == NULL)
+        out = fopen(log_file, "w");
+
+    if (out == NULL)
+        return;
+
+    fprintf(out, "%s", message_text);
+
+    fclose(out);
+}
+
+int define_usb_com_port(char *usb_port, char *log_file)
+{
+    char buffer[100], full_path[200], *ch, message_text[300];
     DIR *dfd;
     struct direct *dp;
     size_t size_dev;
@@ -46,7 +66,8 @@ int define_usb_com_port(char *usb_port)
                     if (ch != NULL)
                     {
                         sprintf(usb_port, "/dev/%s", ch);
-                        printf("Found USB serial port at %s\n", usb_port);
+                        sprintf(message_text, "Found USB serial port at %s\n", usb_port);
+                        output_message_to_log(log_file, message_text);
                         status = 1;
                     }
                 }
@@ -58,91 +79,63 @@ int define_usb_com_port(char *usb_port)
     return status;
 }
 
-int define_usb_reset_command (FILE *in, char *usb_reset_command)
-{
-char *ch1, *ch2, lsusb_string[256];
 
-while (fgets(lsusb_string, 255, in))
+int connect_hologram_model_and_reset_if_error(char *usb_reset_command, int *reset_counter, char *log_file)
 {
-    ch1 = strstr (lsusb_string, ": ID ");
-    if (ch1 != NULL)
+    time_t pc_time, stop_time;
+    FILE *rd;
+    char buffer[101], message_text[300];
+    output_message_to_log(log_file, "Will activate modem\n");
+    pc_time = time(NULL);
+    rd = popen("sudo hologram network connect 2>&1", "r"); // redirect error output to stdout
+
+    if (rd == NULL)
     {
-      ch1 += 5;
-      ch1[9] = '\0';
-      if (!strncmp(ch1 + 10,"Terminus", 8))
-      {
-          sprintf (usb_reset_command,"sudo /usr/bin/usbreset %s", ch1);
-          return 1;
-      }
+        output_message_to_log(log_file, "Unable to open process\n"); // if popen does not work, terminate program
+        return 0;
     }
+
+    fgets(buffer, 100, rd);
+    pclose(rd);
+
+    if (!strstr(buffer, "ERROR"))
+    {
+        stop_time = time(NULL);
+        sprintf(message_text, "%s\nConnected in %d seconds\n", buffer, stop_time - pc_time);
+        output_message_to_log(log_file, message_text);
+        return 1; // Normal connection.
+    }
+
+    sprintf(message_text, "Found error in connection\n%s\nWill reset USB hub [%s]\n", buffer, usb_reset_command);
+    output_message_to_log(log_file, message_text);
+    system(usb_reset_command);
+    *reset_counter = *reset_counter + 1;
+
+    rd = popen("sudo hologram network connect 2>&1", "r"); // redirect error output to stdout
+
+    if (rd == NULL)
+    {
+        output_message_to_log(log_file, "Unable to open process\n"); // if popen does not work, terminate program
+        return 0;
+    }
+
+    fgets(buffer, 100, rd);
+    pclose(rd);
+
+    if (!strstr(buffer, "ERROR"))
+    {
+        stop_time = time(NULL);
+        sprintf(message_text, "%s\nConnected in %d seconds\n", buffer, stop_time - pc_time);
+        output_message_to_log(log_file, message_text);
+        return 1; // Normal connection.
+    }
+
+    sprintf(message_text, "Found error in connection even after reset\n%s\nWill reboot\n", buffer);
+    output_message_to_log(log_file, message_text);
+    system("sudo /sbin/shutdown -r now");
+
+    return 0;
 }
-
-return  0;
-}
-
-
-
-int connect_hologram_model_and_reset_if_error (char *usb_reset_command, int *reset_counter)
-{
-time_t pc_time, stop_time;
-FILE *rd;
-char buffer[101];
-printf("Will activate modem\n");
-pc_time = time(NULL);
-rd = popen("sudo hologram network connect 2>&1","r"); // redirect error output to stdout
-
-if (rd == NULL) 
-{
-printf ("Unable to open process\n"); // if popen does not work, terminate program
-return 0;
-}
-
-fgets (buffer, 100, rd);
-pclose(rd);
-
-if (!strstr (buffer,"ERROR")) 
-{
-    stop_time = time(NULL);
-    printf ("%s\nConnected in %d seconds\n",buffer, stop_time - pc_time);
-    return 1;  // Normal connection.
-}
-
-printf ("Found error in connection\n%s\nWill reset USB hub [%s]\n", buffer,usb_reset_command);
-
-system (usb_reset_command);
-*reset_counter = *reset_counter + 1;
-
-rd = popen("sudo hologram network connect 2>&1","r"); // redirect error output to stdout
-
-if (rd == NULL) 
-{
-printf ("Unable to open process\n"); // if popen does not work, terminate program
-return 0;
-}
-
-fgets (buffer, 100, rd);
-pclose(rd);
-
-
-if (!strstr (buffer,"ERROR")) 
-{
-    stop_time = time(NULL);
-    printf ("%s\nConnected in %d seconds\n",buffer, stop_time - pc_time);
-    return 1;  // Normal connection.
-}
-
-
-printf ("Found error in connection even after reset\n%s\nWill reboot\n", buffer);
-system ("sudo /sbin/shutdown -r now");
-
-return 0;
-
-}
-
-
-
-
-
 
 size_t handle_aeronet_time_internally(unsigned char *buffer, size_t size, size_t nmemb, AERO_EXCHANGE *ptr)
 {
@@ -184,7 +177,7 @@ size_t handle_aeronet_time_internally(unsigned char *buffer, size_t size, size_t
     return nmemb * size;
 }
 
-time_t receive_aeronet_time(AERO_EXCHANGE *ptr)
+time_t receive_aeronet_time(AERO_EXCHANGE *ptr, char *log_file)
 {
     CURL *curl;
     CURLcode res;
@@ -193,7 +186,7 @@ time_t receive_aeronet_time(AERO_EXCHANGE *ptr)
 
     time_t pi_time;
 
-    char url_ref[100];
+    char url_ref[100], message_text[200];
 
     ptr->status = ptr->good_clock = 0;
 
@@ -222,14 +215,16 @@ time_t receive_aeronet_time(AERO_EXCHANGE *ptr)
     res = curl_easy_perform(curl);
 
     pi_time = time(NULL);
-    printf("System time is %s", ctime(&pi_time));
+    sprintf(message_text, "System time is %s", asctime(gmtime(&pi_time)));
+    output_message_to_log(log_file, message_text);
 
     curl_easy_cleanup(curl);
 
     if (res != CURLE_OK)
     {
 
-        printf("Code error = %d\nAeronet time cannot be acquired\n", res);
+        sprintf(message_text, "Code error = %d\nAeronet time cannot be acquired\n", res);
+        output_message_to_log(log_file, message_text);
 
         return 0;
     }
@@ -238,25 +233,24 @@ time_t receive_aeronet_time(AERO_EXCHANGE *ptr)
     {
         ptr->seconds_shift = ptr->aeronet_time - pi_time;
         ptr->status = 1;
-        printf("Aeronet time acquired : %sTime shift = %d seconds",
-               ctime(&ptr->aeronet_time), ptr->seconds_shift);
+        sprintf(message_text, "Aeronet time acquired : %sTime shift = %d seconds",
+                asctime(gmtime(&ptr->aeronet_time)), ptr->seconds_shift);
+        output_message_to_log(log_file, message_text);
 
         if (abs(ptr->seconds_shift) < 3)
         {
             ptr->good_clock = 1;
-            printf(" System clock is good");
+            output_message_to_log(log_file, " System clock is used to correct Cimel clock \n");
         }
         else
         {
-            printf(" System clock will not be used to correct Cimel clock");
+            output_message_to_log(log_file, " System clock will not be used to correct Cimel clock\n");
         }
     }
     else
     {
-        printf("Aeronet time cannot be acquired at the moment, may need to work offline");
+        output_message_to_log(log_file, "Aeronet time cannot be acquired at the moment, may need to work offline\n");
     }
-
-    printf("\n");
 
     return ptr->aeronet_time;
 }
@@ -272,10 +266,11 @@ void close_my_port(MY_COM_PORT *mcport)
     mcport->if_T_port_already_open = 0;
 }
 
-int open_my_com_port(MY_COM_PORT *mcport, int cimel_model)
+int open_my_com_port(MY_COM_PORT *mcport, int cimel_model, char *log_file)
 {
 
     struct termios options;
+    char message_text[300];
 
     if (mcport->if_open_port)
         return 1;
@@ -308,7 +303,8 @@ int open_my_com_port(MY_COM_PORT *mcport, int cimel_model)
     mcport->message_number = 0x21;
     mcport->check_time = time(NULL);
 
-    printf("Port opened with %d baud\n", 1200 + (2 - cimel_model) * 8400);
+    sprintf(message_text, "Port opened with %d baud\n", 1200 + (2 - cimel_model) * 8400);
+    output_message_to_log(log_file, message_text);
 
     return 1;
 }
@@ -417,7 +413,7 @@ static size_t analyze_aeronet_response(void *data, size_t size, size_t nmemb, vo
     return result->text_size;
 }
 
-int libcurl_upload_cimel_buffer_to_https(CIMEL_BUFFER *ptr)
+int libcurl_upload_cimel_buffer_to_https(CIMEL_BUFFER *ptr, char *log_file)
 {
     CURL *curl;
     CURLcode res;
@@ -428,6 +424,8 @@ int libcurl_upload_cimel_buffer_to_https(CIMEL_BUFFER *ptr)
     unsigned char *buffer, *buf;
     size_t buf_size;
     int i;
+
+    char message_text[300];
 
     if (!ptr->if_header)
         return 0;
@@ -482,15 +480,81 @@ int libcurl_upload_cimel_buffer_to_https(CIMEL_BUFFER *ptr)
 
     if (res != CURLE_OK)
     {
-        printf("Code error = %d  Upload unsuccesful\n", res);
+        sprintf(message_text, "Code error = %d  Upload unsuccesful\n", res);
+        output_message_to_log(log_file, message_text);
 
         return 0;
     }
 
-    printf("Upload succesful\n");
+    output_message_to_log(log_file, "Upload succesful\n");
 
     return 1;
 }
+
+
+
+int upload_daily_connection_log_to_ftp(char *log_name, char *username)
+{
+
+    CURL *curl;
+    CURLcode res;
+    char *upload_name, sscctt[200];
+    int i, file_size;
+     FILE *in;
+    
+      upload_name = log_name + strlen(log_name) - 1;
+      while ((upload_name > log_name) && (*upload_name != '/'))
+      upload_name--;
+
+      if (*upload_name == '/') upload_name++;
+
+
+     in = fopen(log_name,"r");
+     if (in == NULL)
+     {
+         printf ("There is no log file %s\n", log_name);
+     return 0;
+     }
+
+     fseek(in,0, SEEK_END);
+     file_size = ftell(in);
+     rewind(in);
+
+
+    printf("Will upload %s size = %d to destination %s/%s\n", log_name, file_size, username, upload_name);
+
+    curl = curl_easy_init();
+
+    if (!curl)
+    {
+     fclose(in);
+        return 0;
+    }
+    sprintf(sscctt, "ftp://aeronet.gsfc.nasa.gov/pub/incoming/raspberry_pi_heartbeat/%s/%s",
+    username, upload_name);
+
+    curl_easy_setopt(curl, CURLOPT_URL, sscctt);
+   curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
+    curl_easy_setopt(curl, CURLOPT_USERPWD, "anonymous:me@email.net");
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 120);
+     curl_easy_setopt(curl, CURLOPT_FTP_RESPONSE_TIMEOUT, 100);
+ 
+    curl_easy_setopt(curl, CURLOPT_FTP_FILEMETHOD, CURLFTPMETHOD_MULTICWD);
+    curl_easy_setopt(curl, CURLOPT_READDATA, in);
+curl_easy_setopt(curl, CURLOPT_INFILESIZE,file_size);
+curl_easy_setopt(curl, CURLOPT_TRANSFERTEXT,1);
+
+    printf("Will perform curl\n");
+    res = curl_easy_perform(curl);
+    fclose(in);
+    printf("Curlopt return %d\n", res);
+    curl_easy_cleanup(curl);
+    if (res == CURLE_OK)
+        return 1;
+
+    return 0;
+}
+
 
 void copy_records(RECORD_BUFFER *ptr1, RECORD_BUFFER *ptr2)
 {
@@ -872,10 +936,11 @@ unsigned char T_retrieve_new_record(unsigned char *buf, size_t record_size, RECO
     return 1;
 }
 
-int T_receive_header_from_port(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr)
+int T_receive_header_from_port(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, char *log_file)
 {
     int status;
     short *nums;
+    char message_text[300];
 
     status = T_receive_packet_from_port(mcport, 'G');
 
@@ -890,7 +955,9 @@ int T_receive_header_from_port(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr)
 
     */
 
-    printf("Header packet Status = %d\n", status);
+    sprintf(message_text, "Header packet Status = %d\n", status);
+    output_message_to_log(log_file, message_text);
+
     if (status < 56)
         return 0;
 
@@ -909,21 +976,23 @@ int T_receive_header_from_port(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr)
     // form "EPROM" from soft_ver_major (ptr->header.buffer[9]) and soft_ver_manor(ptr->header.buffer[10])
     sprintf(ptr->eprom, "SP810%02X%02X", ptr->header.buffer[9], ptr->header.buffer[10]);
 
-    printf("Received T header with Cimel number %d EPROM %s\n", ptr->cimel_number, ptr->eprom);
+    sprintf(message_text, "Received T header with Cimel number %d EPROM %s\n", ptr->cimel_number, ptr->eprom);
+    output_message_to_log(log_file, message_text);
 
     ptr->if_header = 1;
 
     return 1;
 }
 
-int T_retrieve_k8_buffer(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int max_num)
+int T_retrieve_k8_buffer(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int max_num, char *log_file)
 {
     unsigned char command_byte;
     int continue_retrieval = 1;
+    char message_text[300];
 
     if (!ptr->if_header)
     {
-        if (!T_receive_header_from_port(mcport, ptr))
+        if (!T_receive_header_from_port(mcport, ptr, log_file))
             return 0;
     }
 
@@ -956,8 +1025,8 @@ int T_retrieve_k8_buffer(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int max_num)
                 if (continue_retrieval)
                 {
                     printf("num = %d  idbyte = %d  time = %s", ptr->num_records,
-                           ptr->records[ptr->num_records].idbyte, ctime(&ptr->records[ptr->num_records].record_time));
-
+                            ptr->records[ptr->num_records].idbyte, asctime(gmtime(&ptr->records[ptr->num_records].record_time)));
+                    //output_message_to_log(log_file, message_text);
                     ptr->num_records++;
                     if (max_num && (ptr->num_records == max_num))
                         continue_retrieval = 0;
@@ -982,11 +1051,12 @@ int T_retrieve_k8_buffer(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int max_num)
     return 1;
 }
 
-int T_retrieve_k8_buffer_data_only(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int max_num)
+int T_retrieve_k8_buffer_data_only(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int max_num, char *log_file)
 {
     unsigned char command_byte;
     int continue_retrieval = 1, the_packet, the_record;
     time_t pc_time;
+    char message_text[300];
 
     command_byte = 'C';
 
@@ -1023,7 +1093,8 @@ int T_retrieve_k8_buffer_data_only(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int m
                 if (continue_retrieval)
                 {
                     printf("num = %d  idbyte = %d  time = %s", ptr->num_records,
-                           ptr->records[ptr->num_records].idbyte, ctime(&ptr->records[ptr->num_records].record_time));
+                            ptr->records[ptr->num_records].idbyte, asctime(gmtime(&ptr->records[ptr->num_records].record_time)));
+                    //output_message_to_log(log_file, message_text);
 
                     ptr->num_records++;
                     if (max_num && (ptr->num_records == max_num))
@@ -1035,14 +1106,15 @@ int T_retrieve_k8_buffer_data_only(MY_COM_PORT *mcport, CIMEL_BUFFER *ptr, int m
 
     if (!ptr->num_records)
     {
-        printf ("Found no new records\n");
+        output_message_to_log(log_file, "Found no new records\n");
         free_cimel_buffer(ptr);
         return 0;
     }
 
     mcport->last_time_T = ptr->records->record_time;
     pc_time = time(NULL);
-    printf("Retrieved K8 buffer with %d records  %s", ptr->num_records, ctime(&pc_time));
+    sprintf(message_text, "Retrieved K8 buffer with %d records  %s", ptr->num_records, asctime(gmtime(&pc_time)));
+    output_message_to_log(log_file, message_text);
 
     return 1;
 }
@@ -1475,12 +1547,13 @@ returns:
 
 */
 
-int V5_main_loop_cycle(MY_COM_PORT *mcport, AERO_EXCHANGE *aerex, CIMEL_BUFFER *k7_buffer)
+int V5_main_loop_cycle(MY_COM_PORT *mcport, AERO_EXCHANGE *aerex, CIMEL_BUFFER *k7_buffer, char *log_file)
 {
 
     int retval, i, status;
     time_t new_time, correct_time;
     RECORD_BUFFER *ptr;
+    char message_text[500];
 
     retval = reading_single_port_with_timeout(mcport);
 
@@ -1550,10 +1623,13 @@ perform timeout. if time_interval reached, then action - upload hourle and/or da
                         mcport->time_correction_flag = 1;
                     }
 
-                    printf("Time difference = %ld", correct_time - mcport->cimel_time);
+                    sprintf(message_text, "Time difference = %ld", correct_time - mcport->cimel_time);
+                    output_message_to_log(log_file, message_text);
+
                     if (mcport->time_correction_flag)
-                        printf(" Time correction  suggested");
-                    printf("\n");
+                        output_message_to_log(log_file, " Time correction  suggested\n");
+                    else
+                        output_message_to_log(log_file, "\n");
                 }
 
                 else
@@ -1567,7 +1643,8 @@ perform timeout. if time_interval reached, then action - upload hourle and/or da
                     k7_buffer->eprom[i] = k7_buffer->header.buffer[i + 128];
                 k7_buffer->eprom[8] = '\0';
 
-                printf("Port %s - header %s  %d\n", mcport->port_name, k7_buffer->eprom, k7_buffer->cimel_number);
+                sprintf(message_text, "Port %s - header %s  %d\n", mcport->port_name, k7_buffer->eprom, k7_buffer->cimel_number);
+                output_message_to_log(log_file, message_text);
                 return 8;
             }
             else if (status == 6)
@@ -1585,8 +1662,8 @@ perform timeout. if time_interval reached, then action - upload hourle and/or da
 
                 k7_buffer->num_records++;
 
-                printf("num = %d  idbyte = %d  time = %s", k7_buffer->num_records, ptr->idbyte, ctime(&ptr->record_time));
-
+                printf("num = %d  idbyte = %d  time = %s", k7_buffer->num_records, ptr->idbyte, asctime(gmtime(&ptr->record_time)));
+                //output_message_to_log(log_file, message_text);
                 return 0;
             }
             else if ((status == -1) || (status == -2) || (status == 3) || (status == 5))
@@ -1706,9 +1783,9 @@ time_t V5_read_k7_buffer_from_disk(char *dir_name, CIMEL_BUFFER *ptr)
     {
 
         rec_size = buf[1];
-        if (rec_size < 1) end_read = 1;
-        else
-       if (buf + rec_size >= bufend)
+        if (rec_size < 1)
+            end_read = 1;
+        else if (buf + rec_size >= bufend)
             end_read = 1;
         else if (buf[rec_size - 1] != rec_size)
             end_read = 1;
@@ -1740,8 +1817,10 @@ time_t V5_read_k7_buffer_from_disk(char *dir_name, CIMEL_BUFFER *ptr)
 
     free(buffer);
 
-   if (!ptr->num_records) return 0;
-    
-   return ptr->records->record_time;   
+    if (!ptr->num_records)
+        return 0;
 
+    return ptr->records->record_time;
 }
+
+
