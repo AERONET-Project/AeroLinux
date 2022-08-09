@@ -50,12 +50,12 @@ fi
 
 echo "$user_var	ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "Adding cronjobs to user's crontab"
-cronjob1="@reboot sleep 240 && /home/$user_var/aerolinux/controls/startup.sh >> /home/$user_var/logs/connection.log"
-cronjob2="@reboot sleep 300 && /home/$user_var/aerolinux/controls/watch.sh"
-cronjob3="0 0 */2 * * /home/$user_var/aerolinux/controls/updater.sh"
-cronjob4="0 0 */2 * * /home/$user_var/aerolinux/controls/k7_k8_check.sh"
-cronjob5="@reboot sleep 60 && /home/$user_var/aerolinux/controls/pi_ftp_upload.sh >> /home/$user_var/logs/modem_diagnostics.log"
-cronjob6="0 3 * * 6 /home/$user_var/aerolinux/controls/backup_upload.sh"
+cronjob1="@reboot sleep 240 && /home/$user_var/AeroLinux/controls/startup.sh >> /home/$user_var/logs/connection.log"
+cronjob2="@reboot sleep 300 && /home/$user_var/AeroLinux/controls/watch.sh"
+cronjob3="0 0 */2 * * /home/$user_var/AeroLinux/controls/updater.sh"
+cronjob4="0 0 */2 * * /home/$user_var/AeroLinux/controls/k7_k8_check.sh"
+cronjob5="@reboot sleep 60 && /home/$user_var/AeroLinux/controls/pi_ftp_upload.sh >> /home/$user_var/logs/modem_diagnostics.log"
+cronjob6="0 3 * * 6 /home/$user_var/AeroLinux/controls/backup_upload.sh"
 
 
 { crontab -l -u $user_var 2>/dev/null; echo "$cronjob1"; } | crontab -u $user_var -
@@ -75,8 +75,8 @@ mkdir /home/$user_var/backup #For data files saved to disk
 touch /home/$user_var/logs/connection.log
 touch /home/$user_var/logs/modem_diagnostics.log
 
-cd /home/$user_var/aerolinux/controls/
-cc -o pi_ftp_upload /home/$user_var/aerolinux/controls/pi_ftp_upload.c -lm -lcurl
+cd /home/$user_var/AeroLinux/controls/
+cc -o pi_ftp_upload /home/$user_var/AeroLinux/controls/pi_ftp_upload.c -lm -lcurl
 cc -o backup_send find_and_upload_backup_files.c models_port.c -lm -lcurl
 chown -R ${user_var}: /home/$user_var/
 chmod -R 777 /home/$user_var/
@@ -87,10 +87,10 @@ echo "Compiling Cimel software package..."
 sleep 2
 
 
-cd /home/$user_var/aerolinux/cimel_connect/
+cd /home/$user_var/AeroLinux/cimel_connect/
 cc -o models_connect_and_reset models_connect_and_reset.c models_port.c -lm -lcurl
-chmod -R 777 /home/$user_var/aerolinux/cimel_connect/
-chown ${user_var}: /home/$user_var/aerolinux/cimel_connect/models_connect_and_reset
+chmod -R 777 /home/$user_var/AeroLinux/cimel_connect/
+chown ${user_var}: /home/$user_var/AeroLinux/cimel_connect/models_connect_and_reset
 
 
 
