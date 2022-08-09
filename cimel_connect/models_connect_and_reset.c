@@ -82,7 +82,7 @@ else
 {
      if_local = 0;
 
-sprintf (usb_reset_command,"sh /home/%s/aerolinux/controls/USB_handler.sh", username); 
+sprintf (usb_reset_command,"sh /home/%s/AeroLinux/controls/USB_handler.sh", username); 
     
         sprintf(message_text, "Use hologram mode, usb reset command = [%s]\n", usb_reset_command);
         output_message_to_log(log_file, message_text);
