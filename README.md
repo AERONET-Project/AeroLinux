@@ -49,7 +49,7 @@ Then install git,
 
 To get your project up and running please clone the latest version of the software,
 ```bash
-  sudo git clone https://github.com/anthony-larosa/aerolinux.git
+  sudo git clone https://github.com/AERONET-Project/AeroLinux.git
 ```
 
 
