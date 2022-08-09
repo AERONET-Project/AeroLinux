@@ -15,7 +15,7 @@ while [ $counter -lt 4 ]; do
 	else
 		echo "Cimel connect was not running at ${now}." >> $HOME/logs/connection.log
 		counter=$((counter+1))
-		/home/$USER/aerolinux/controls/startup.sh
+		/home/$USER/AeroLinux/controls/startup.sh
 		
 		sleep 13h
 		now=$(date)
